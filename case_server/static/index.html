@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>测试用例监控</title>
+    <style>
+        /* 保持原有样式不变 */
+        .test-case {
+            border: 1px solid #ddd;
+            margin: 10px;
+            padding: 15px;
+            border-radius: 5px;
+        }
+        .case-header {
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .case-title {
+            font-weight: bold;
+            color: #333;
+            margin-left: 10px;
+        }
+        .steps-container {
+            margin-left: 30px;
+            border-left: 2px solid #eee;
+            padding-left: 20px;
+        }
+        .step {
+            margin: 10px 0;
+            padding: 10px;
+            background: #f8f9fa;
+            border-radius: 4px;
+        }
+        .step-header {
+            display: flex;
+            align-items: center;
+        }
+        .status-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            margin-right: 8px;
+        }
+        .running .status-dot { background: #4a90e2; }
+        .success .status-dot { background: #7ed321; }
+        .logs {
+            margin-top: 5px;
+            padding-left: 20px;
+            font-size: 0.9em;
+        }
+        .log-item {
+            color: #666;
+            margin: 3px 0;
+        }
+        .timestamp {
+            color: #999;
+            font-size: 0.8em;
+            margin-left: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div id="testContainer"></div>
+
+    <script>
+        const ws = new WebSocket('ws://' + window.location.host + '/ws');
+        let currentCase = null;
+        let currentStep = null;
+
+        // 修正后的消息处理映射表
+        const handlers = {
+            case_start: (data) => {
+                currentCase = createTestCase(data.message);
+                document.getElementById('testContainer').appendChild(currentCase);
+            },
+
+            step_start: (data) => {
+                if (!currentCase) return;
+                currentStep = createStep(data.message);
+                currentCase.querySelector('.steps-container').appendChild(currentStep);
+            },
+
+            log: (data) => {
+                if (!currentStep) return;
+                const logItem = document.createElement('div');
+                logItem.className = 'log-item';
+                logItem.innerHTML = `
+                    <span>${data.message}</span>
+                    <span class="timestamp">${new Date().toLocaleTimeString()}</span>
+                `;
+                currentStep.querySelector('.logs').appendChild(logItem);
+            },
+
+            step_end: (data) => {
+                if (!currentStep) return;
+                currentStep.classList.remove('running');
+                currentStep.classList.add('success');
+                currentStep.querySelector('.status-dot').style.backgroundColor = '#7ed321';
+                currentStep = null;
+            }
+        };
+
+        // 创建测试用例元素（保持不变）
+        function createTestCase(title) {
+            const div = document.createElement('div');
+            div.className = 'test-case';
+            div.innerHTML = `
+                <div class="case-header">
+                    <div class="status-dot running"></div>
+                    <div class="case-title">${title}</div>
+                </div>
+                <div class="steps-container"></div>
+            `;
+            return div;
+        }
+
+        // 创建步骤元素（保持不变）
+        function createStep(title) {
+            const div = document.createElement('div');
+            div.className = 'step running';
+            div.innerHTML = `
+                <div class="step-header">
+                    <div class="status-dot"></div>
+                    <div>${title}</div>
+                </div>
+                <div class="logs"></div>
+            `;
+            return div;
+        }
+
+        // 修正后的消息处理逻辑
+        ws.onmessage = (event) => {
+            try {
+                const data = JSON.parse(event.data).data;
+                console.log(data);  // 调试日志
+
+                if (data.suffer && handlers[data.suffer]) {
+                    handlers[data.suffer](data);
+                }
+            } catch (e) {
+                console.error('消息解析错误:', e);
+            }
+        };
+
+        // 折叠/展开功能（保持不变）
+        document.addEventListener('click', (e) => {
+            if (e.target.closest('.case-header')) {
+                const container = e.target.closest('.test-case').querySelector('.steps-container');
+                container.style.display = container.style.display === 'none' ? 'block' : 'none';
+            }
+        });
+    </script>
+</body>
+</html>

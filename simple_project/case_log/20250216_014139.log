@@ -1,0 +1,11 @@
+[2025-02-16 01:41:39] [INFO] [frame_log:112] 【用例 1】 开始执行
+[2025-02-16 01:41:39] [INFO] [frame_log:112] 【用例 2】 开始执行
+[2025-02-16 01:41:39] [INFO] [frame_log:112] Step started: 步骤 1
+[2025-02-16 01:41:39] [INFO] [frame_log:112] test1111111111111111111111
+[2025-02-16 01:41:39] [INFO] [frame_log:112] Step passed: 步骤 1
+[2025-02-16 01:41:39] [INFO] [frame_log:112] Step started: 步骤 2
+[2025-02-16 01:41:39] [INFO] [frame_log:112] test2222222222222222222222
+[2025-02-16 01:41:39] [INFO] [frame_log:112] Step passed: 步骤 2
+[2025-02-16 01:41:39] [INFO] [frame_log:112] Step started: 步骤 3
+[2025-02-16 01:41:39] [INFO] [frame_log:112] test3333333333333
+[2025-02-16 01:41:39] [INFO] [frame_log:112] Step passed: 步骤 3

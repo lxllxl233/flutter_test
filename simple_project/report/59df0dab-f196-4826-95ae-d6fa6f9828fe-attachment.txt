@@ -1,0 +1,3 @@
+INFO     TestFramework:frame_log.py:109 Step started: 步骤 1
+INFO     TestFramework:frame_log.py:109 test
+INFO     TestFramework:frame_log.py:109 Step passed: 步骤 1

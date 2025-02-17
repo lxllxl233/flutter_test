@@ -1,0 +1,25 @@
+[2025-02-16 02:16:49] [INFO] [frame_log:112] 用例 1
+[2025-02-16 02:16:49] [INFO] [frame_log:112] Step started: 1步骤 1
+[2025-02-16 02:16:50] [INFO] [frame_log:112] 1test1111111111111111111111
+[2025-02-16 02:16:51] [INFO] [frame_log:112] 1test1111111111111111111111
+[2025-02-16 02:16:52] [INFO] [frame_log:112] 1test1111111111111111111111
+[2025-02-16 02:16:53] [INFO] [frame_log:112] 1test1111111111111111111111
+[2025-02-16 02:16:53] [INFO] [frame_log:112] Step passed: 1步骤 1
+[2025-02-16 02:16:53] [INFO] [frame_log:112] Step started: 1步骤 2
+[2025-02-16 02:16:54] [INFO] [frame_log:112] 1test2222222222222222222222
+[2025-02-16 02:16:54] [INFO] [frame_log:112] Step passed: 1步骤 2
+[2025-02-16 02:16:54] [INFO] [frame_log:112] Step started: 1步骤 3
+[2025-02-16 02:16:55] [INFO] [frame_log:112] 1test3333333333333
+[2025-02-16 02:16:55] [INFO] [frame_log:112] Step passed: 1步骤 3
+[2025-02-16 02:16:55] [INFO] [frame_log:112] 用例 1
+[2025-02-16 02:16:55] [INFO] [frame_log:112] 用例 2
+[2025-02-16 02:16:55] [INFO] [frame_log:112] Step started: 2步骤 1
+[2025-02-16 02:16:56] [INFO] [frame_log:112] 2test1111111111111111111111
+[2025-02-16 02:16:56] [INFO] [frame_log:112] Step passed: 2步骤 1
+[2025-02-16 02:16:56] [INFO] [frame_log:112] Step started: 2步骤 2
+[2025-02-16 02:16:57] [INFO] [frame_log:112] 2test2222222222222222222222
+[2025-02-16 02:16:57] [INFO] [frame_log:112] Step passed: 2步骤 2
+[2025-02-16 02:16:57] [INFO] [frame_log:112] Step started: 2步骤 3
+[2025-02-16 02:16:58] [INFO] [frame_log:112] 2test3333333333333
+[2025-02-16 02:16:58] [INFO] [frame_log:112] Step passed: 2步骤 3
+[2025-02-16 02:16:58] [INFO] [frame_log:112] 用例 2

@@ -1,0 +1,10 @@
+INFO     TestFramework:frame_log.py:112 Step started: 1步骤 1
+INFO     TestFramework:frame_log.py:112 1test1111111111111111111111
+INFO     TestFramework:frame_log.py:112 1test1111111111111111111111
+INFO     TestFramework:frame_log.py:112 1test1111111111111111111111
+INFO     TestFramework:frame_log.py:112 1test1111111111111111111111
+INFO     TestFramework:frame_log.py:112 验证成功
+INFO     TestFramework:frame_log.py:112 Step passed: 1步骤 1
+INFO     TestFramework:frame_log.py:112 Step started: 1步骤 2
+INFO     TestFramework:frame_log.py:112 1test2222222222222222222222
+INFO     TestFramework:frame_log.py:112 Step failed: 1步骤 2
