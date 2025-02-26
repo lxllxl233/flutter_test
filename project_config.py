@@ -15,3 +15,4 @@ CONFIG_DICT = {
 }
 CONFIG_DICT['LOG_DIR'] = os.path.join(CONFIG_DICT['PROJECT_NAME'], 'case_log')
 CONFIG_DICT['REPORT_DIR'] = os.path.join(CONFIG_DICT['PROJECT_NAME'], 'report')
+CONFIG_DICT['TASK'] = 'demo_task'

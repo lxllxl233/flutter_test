@@ -78,6 +78,8 @@ def frame_case(case_id=None, case_name=None, case_tags=None, case_author=None):
             func = allure.title(case_name)(func)
         if case_tags:
             func = allure.tag(*case_tags)(func)
+            for tp in case_tags:
+                func = pytest.mark.__getattr__(tp)(func)
         if case_author:
             func = allure.description(f"Author: {case_author}")(func)
 

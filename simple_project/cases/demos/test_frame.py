@@ -21,7 +21,7 @@ class TestFrame:
     @frame_case(
         case_id=["TC001"],
         case_name="用例 1",
-        case_tags=["标签1", "标签2"],
+        case_tags=["TC001", "标签1", "标签2"],
         case_author="long"
     )
     def test_logger_1(self):
@@ -50,7 +50,7 @@ class TestFrame:
     @frame_case(
         case_id=["TC002"],
         case_name="用例 2",
-        case_tags=["标签2", "标签2"],
+        case_tags=["TC002", "标签2", "标签2"],
         case_author="long"
     )
     def test_logger_2(self):

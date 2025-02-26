@@ -1,4 +1,5 @@
 import argparse
+import json
 import os
 import sys
 import pytest
@@ -40,20 +41,18 @@ class FrameApplication:
         os.makedirs(self.report_dir, exist_ok=True)
         os.makedirs(self.log_dir, exist_ok=True)
 
-    def run(self, task: Optional[str] = None):
-        """
-        启动测试框架并运行测试任务。
-
-        :param task: 任务文件路径（包含用例ID列表），默认为 None 表示全量运行。
-        """
+    def run(self):
         try:
-            # 加载任务配置（如果提供）
-            test_ids = self._load_task(task) if task else None
-
-            # 构建 pytest 参数
-            pytest_args = self._build_pytest_args(test_ids)
+            task = self.config_manager.get('TASK', None)
+            case_ids = []
+            if task is not None:
+                task = os.path.join(os.path.join(self.config_manager.get('PROJECT_NAME'), 'task'), task+'.json')
+                case_ids = json.load(open(task))['case_ids']
+                print(case_ids)
+            pytest_args = self._build_pytest_args(case_ids)
 
             # 运行测试
+            print(pytest_args)
             self._run_tests(pytest_args)
 
         except Exception as e:
@@ -96,13 +95,11 @@ class FrameApplication:
         pytest_args = [
             "-s",  # 详细输出
             "--capture=no",  # 禁用输出捕获
-            "--alluredir=" + self.config_manager.get('REPORT_DIR')
+            "--alluredir=" + self.config_manager.get('REPORT_DIR'),
+            "-m=" + ' or '.join(test_ids),
+            "-W ignore::pytest.PytestUnknownMarkWarning",
+            "-W ignore::pytest.PytestConfigWarning"
         ]
-
-        # 如果提供了用例ID，则仅运行指定用例
-        if test_ids:
-            pytest_args.extend(["-k", " or ".join(test_ids)])
-
         return pytest_args
 
     def _run_tests(self, pytest_args: List[str]):
