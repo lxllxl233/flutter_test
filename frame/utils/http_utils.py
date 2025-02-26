@@ -51,7 +51,7 @@ class HttpClient:
             'params': json.dumps(kwargs.get('params', {})),
             'headers': json.dumps(kwargs.get('headers', {})),
             'request': json.dumps(kwargs.get('data', {})),
-            'response': json.dumps(kwargs.get('response', Resp()).text)
+            'response': kwargs.get('response', Resp()).text
         }, suffer='request')
 
     def _request(

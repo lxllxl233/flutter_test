@@ -15,7 +15,7 @@ class TestFrame:
     def setup_method(self):
         if not self.__class__.already_do:
             print('前置')
-            self.frame_request = HttpClient(base_url='https://cn.bing.com')
+            self.frame_request = HttpClient(base_url='https://tags.growingio.com')
             self.__class__.already_do = True
 
     @frame_case(
@@ -27,7 +27,7 @@ class TestFrame:
     def test_logger_1(self):
         with frame.step('1步骤 1'):
             time.sleep(TestFrame.wait_time)
-            self.frame_request.get('/th', params={
+            self.frame_request.get('/products/c196c3667d214851b11233f5c17f99d5/web/www.nowcoder.com/settings/general', params={
                 'id' : 'OBFB.1E928B2B86E3D4E8ED1D46B83E667303',
                 'pid' : 'Fb','qlt' :99,'r' :0
             })

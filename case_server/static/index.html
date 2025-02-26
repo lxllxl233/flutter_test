@@ -357,18 +357,28 @@
         };
 
         // 新增代码格式化方法
-        function formatCode(data) {
-            try {
-                const jsonData = typeof data === 'string' ? JSON.parse(data) : data;
-                return JSON.stringify(jsonData, null, 2)
-                    .replace(/</g, '&lt;')
-                    .replace(/>/g, '&gt;');
-            } catch {
-                return typeof data === 'object'
-                    ? JSON.stringify(data, null, 2)
-                    : String(data);
-            }
+function formatCode(data) {
+    try {
+        // 尝试解析为JSON
+        const jsonData = typeof data === 'string' ? JSON.parse(data) : data;
+        return JSON.stringify(jsonData, null, 2)
+            .replace(/</g, '&lt;')  // 转义HTML特殊字符
+            .replace(/>/g, '&gt;');
+    } catch (e) {
+        // 如果不是JSON，直接返回原始数据（去除转义字符）
+        if (typeof data === 'string') {
+            return data
+                .replace(/\\"/g, '"')  // 将 \" 替换为 "
+                .replace(/\\n/g, '\n')  // 将 \n 替换为换行符
+                .replace(/\\t/g, '\t')  // 将 \t 替换为制表符
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;');
         }
+        return typeof data === 'object'
+            ? JSON.stringify(data, null, 2)
+            : String(data);
+    }
+}
 
         // ...保持其他代码不变...
 

@@ -1,9 +1,9 @@
+import json
 import os
 import importlib.util
-from typing import Dict, Any, Optional
+from typing import Any
 
 from project_config import CONFIG_DICT
-
 
 class ConfigManager:
     console_config = {}
@@ -12,6 +12,7 @@ class ConfigManager:
 
     @classmethod
     def init_class(cls):
+        # 获取测试床
         console_config = {}
         user_config = {}
         cls.default_config = CONFIG_DICT
