@@ -2,3 +2,5 @@
 .pytest_cache
 .idea
 __pycache__
+simple_project/case_log
+simple_project/report

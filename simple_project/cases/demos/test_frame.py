@@ -1,14 +1,23 @@
 import time
 
+import pytest
+
 from frame.core.frame_bean import FrameBean
 from frame.core.frame_visualization import frame
 from frame.utils.common_utils import frame_case, AssertUtil
+from frame.utils.http_utils import HttpClient
 
 logger = FrameBean.get_service('logger')
 class TestFrame:
     wait_time = 1
-    def setup(self):
-        pass
+    already_do = False
+
+    def setup_method(self):
+        if not self.__class__.already_do:
+            print('前置')
+            self.frame_request = HttpClient(base_url='https://cn.bing.com')
+            self.__class__.already_do = True
+
     @frame_case(
         case_id=["TC001"],
         case_name="用例 1",
@@ -18,6 +27,10 @@ class TestFrame:
     def test_logger_1(self):
         with frame.step('1步骤 1'):
             time.sleep(TestFrame.wait_time)
+            self.frame_request.get('/th', params={
+                'id' : 'OBFB.1E928B2B86E3D4E8ED1D46B83E667303',
+                'pid' : 'Fb','qlt' :99,'r' :0
+            })
             logger.info('1test1111111111111111111111')
             time.sleep(TestFrame.wait_time)
             logger.info('1test1111111111111111111111')
@@ -29,7 +42,6 @@ class TestFrame:
         with frame.step('1步骤 2'):
             time.sleep(TestFrame.wait_time)
             logger.info('1test2222222222222222222222')
-            AssertUtil.assert_equal(expr=((1 / 0)==0), success_msg='验证成功', fail_msg='验证失败')
         with frame.step('1步骤 3'):
             time.sleep(TestFrame.wait_time)
             logger.info('1test3333333333333')
@@ -45,7 +57,6 @@ class TestFrame:
         with frame.step('2步骤 1'):
             time.sleep(TestFrame.wait_time)
             logger.info('2test1111111111111111111111')
-            AssertUtil.assert_equal(expr=(1 ==2), success_msg='验证成功', fail_msg='验证失败')
         with frame.step('2步骤 2'):
             time.sleep(TestFrame.wait_time)
             logger.info('2test2222222222222222222222')

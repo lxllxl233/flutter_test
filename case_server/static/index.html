@@ -4,60 +4,210 @@
     <meta charset="UTF-8">
     <title>测试用例监控</title>
     <style>
-        /* 保持原有样式不变 */
-        .test-case {
-            border: 1px solid #ddd;
-            margin: 10px;
-            padding: 15px;
-            border-radius: 5px;
+        /* 基础样式重置 */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
         }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+                        "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.6;
+            background: #f8fafc;
+            color: #334155;
+            padding: 2rem;
+        }
+
+        /* 测试用例卡片 */
+        .test-case {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            margin-bottom: 1.5rem;
+            transition: box-shadow 0.2s;
+        }
+
+        .test-case:hover {
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
         .case-header {
-            cursor: pointer;
+            padding: 1.25rem;
             display: flex;
             align-items: center;
-            margin-bottom: 10px;
+            cursor: pointer;
+            border-bottom: 1px solid #f1f5f9;
         }
+
+        .status-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 12px;
+            position: relative;
+        }
+
+        .status-dot::after {
+            content: "";
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 1; }
+            100% { transform: scale(2.5); opacity: 0; }
+        }
+
+        .running .status-dot { background: #3b82f6; }
+        .running .status-dot::after { background: #bfdbfe; }
+
+        .success .status-dot {
+            background: #10b981;
+            animation: none;
+        }
+
         .case-title {
-            font-weight: bold;
-            color: #333;
-            margin-left: 10px;
+            font-weight: 600;
+            color: #1e293b;
+            font-size: 1.1rem;
         }
+
+        /* 步骤样式 */
         .steps-container {
-            margin-left: 30px;
-            border-left: 2px solid #eee;
-            padding-left: 20px;
+            padding: 0 1.25rem 1.25rem;
         }
+
         .step {
-            margin: 10px 0;
-            padding: 10px;
-            background: #f8f9fa;
-            border-radius: 4px;
+            background: #f8fafc;
+            border-radius: 8px;
+            margin: 1rem 0;
+            padding: 1rem;
+            border-left: 4px solid #e2e8f0;
         }
+
+        .step.running {
+            border-left-color: #3b82f6;
+        }
+
+        .step.success {
+            border-left-color: #10b981;
+        }
+
         .step-header {
             display: flex;
             align-items: center;
+            margin-bottom: 0.5rem;
         }
-        .status-dot {
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            margin-right: 8px;
-        }
-        .running .status-dot { background: #4a90e2; }
-        .success .status-dot { background: #7ed321; }
-        .logs {
-            margin-top: 5px;
-            padding-left: 20px;
-            font-size: 0.9em;
-        }
+
         .log-item {
-            color: #666;
-            margin: 3px 0;
+            padding: 0.5rem;
+            background: white;
+            border-radius: 6px;
+            margin: 0.25rem 0;
+            font-size: 0.9em;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
+
         .timestamp {
-            color: #999;
-            font-size: 0.8em;
-            margin-left: 10px;
+            color: #64748b;
+            font-size: 0.85em;
+            flex-shrink: 0;
+            margin-left: 1rem;
+        }
+
+        /* 请求模块增强 */
+        .request-container {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            margin: 1rem 0;
+        }
+
+        .request-summary {
+            padding: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+            border-radius: 8px 8px 0 0;
+        }
+
+        .request-method {
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .get-method { background: #dbeafe; color: #1d4ed8; }
+        .post-method { background: #d1fae5; color: #047857; }
+        .put-method { background: #fef3c7; color: #b45309; }
+        .delete-method { background: #fee2e2; color: #b91c1c; }
+
+        .request-details {
+            padding: 1rem;
+            border-top: 1px solid #f1f5f9;
+        }
+
+        .request-section h4 {
+            color: #475569;
+            font-size: 0.9em;
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .code-block {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+            padding: 1rem;
+            font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+            font-size: 0.85em;
+            line-height: 1.5;
+            color: #334155;
+            overflow-x: auto;
+            position: relative;
+        }
+
+        .code-block::before {
+            content: attr(data-lang);
+            position: absolute;
+            top: 0;
+            right: 0;
+            background: #f1f5f9;
+            color: #64748b;
+            font-size: 0.75em;
+            padding: 0.25rem 0.5rem;
+            border-radius: 0 6px 0 4px;
+        }
+
+        /* 动画增强 */
+        details[open] summary span:last-child {
+            transform: rotate(180deg);
+        }
+
+        details summary {
+            transition: background 0.2s;
+        }
+
+        details summary::-webkit-details-marker {
+            display: none;
+        }
+
+        details summary span:last-child {
+            transition: transform 0.2s;
+            font-size: 0.9em;
+            color: #64748b;
         }
     </style>
 </head>
@@ -65,6 +215,7 @@
     <div id="testContainer"></div>
 
     <script>
+        // ...保持原有ws连接和基础代码不变...
         const ws = new WebSocket('ws://' + window.location.host + '/ws');
         let currentCase = null;
         let currentStep = null;
@@ -151,6 +302,76 @@
                 container.style.display = container.style.display === 'none' ? 'block' : 'none';
             }
         });
+        // 新增请求消息处理器
+        handlers.request = (data) => {
+            const container = document.createElement('div');
+            container.className = 'request-container';
+
+            // 创建折叠面板
+            const details = document.createElement('details');
+            const summary = document.createElement('summary');
+            summary.className = 'request-summary';
+
+            // 添加方法标签颜色
+            const methodClass = `${data.message.method.toLowerCase()}-method`;
+            summary.innerHTML = `
+                <div>
+                    <span>${data.message.url}</span>
+                    <span class="request-method ${methodClass}">${data.message.method}</span>
+                </div>
+                <span>▼</span>
+            `;
+
+            // 创建详细内容区
+            const content = document.createElement('div');
+            content.className = 'request-details';
+
+            // 创建各代码区块
+            const sections = {
+                'Params': data.message.params,
+                'Headers': data.message.headers,
+                'Request': data.message.request,
+                'Response': data.message.response
+            };
+
+            Object.entries(sections).forEach(([title, contentData]) => {
+                const section = document.createElement('div');
+                section.className = 'request-section';
+                section.innerHTML = `
+                    <h4>${title}</h4>
+                    <pre class="code-block">${this.formatCode(contentData)}</pre>
+                `;
+                content.appendChild(section);
+            });
+
+            details.appendChild(summary);
+            details.appendChild(content);
+            container.appendChild(details);
+
+            // 插入到当前步骤或全局容器
+            if (currentStep) {
+                currentStep.querySelector('.logs').appendChild(container);
+            } else {
+                document.getElementById('testContainer').appendChild(container);
+            }
+        };
+
+        // 新增代码格式化方法
+        function formatCode(data) {
+            try {
+                const jsonData = typeof data === 'string' ? JSON.parse(data) : data;
+                return JSON.stringify(jsonData, null, 2)
+                    .replace(/</g, '&lt;')
+                    .replace(/>/g, '&gt;');
+            } catch {
+                return typeof data === 'object'
+                    ? JSON.stringify(data, null, 2)
+                    : String(data);
+            }
+        }
+
+        // ...保持其他代码不变...
+
     </script>
 </body>
 </html>
