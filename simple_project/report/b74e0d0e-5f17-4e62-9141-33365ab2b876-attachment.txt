@@ -1,4 +1,0 @@
-INFO     werkzeug:_internal.py:97 127.0.0.1 - - [16/Feb/2025 00:40:44] "GET /stream HTTP/1.1" 200 -
-INFO     TestFramework:frame_log.py:110 Step started: 步骤 1
-INFO     TestFramework:frame_log.py:110 test
-INFO     TestFramework:frame_log.py:110 Step passed: 步骤 1

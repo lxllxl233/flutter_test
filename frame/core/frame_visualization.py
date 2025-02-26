@@ -1,4 +1,6 @@
 # 框架案例运行可视化工具
+import allure
+
 from frame.core.frame_bean import FrameBean
 
 logger = FrameBean.get_service('logger')
@@ -12,7 +14,9 @@ class FrameAllure:
 
     def __enter__(self):
         logger.info(f"Step started: {self.name}", suffer='step_start')
-        # 这里可以添加更多逻辑，如记录日志、注入元数据等
+        with allure.step(self.name):
+            pass
+            # 这里可以添加更多逻辑，如记录日志、注入元数据等
 
     def __exit__(self, exc_type, exc_val, exc_tb):
         if exc_type is not None:
