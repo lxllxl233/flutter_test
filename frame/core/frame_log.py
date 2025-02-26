@@ -5,6 +5,8 @@ from datetime import datetime
 from pathlib import Path
 from typing import Optional, Union
 from functools import wraps
+
+from frame.core.frame_config import ConfigManager
 from frame.core.frame_socket import send
 
 # 日志颜色配置
@@ -105,10 +107,11 @@ class TestLogger:
         self.logger.debug(msg, *args, **kwargs)
 
     def info(self, msg, suffer=None, *args, **kwargs):
-        send({
-            'message': msg,
-            'suffer': suffer if suffer is not None else 'log'
-        })
+        if ConfigManager.get('IS_VIEW'):
+            send({
+                'message': msg,
+                'suffer': suffer if suffer is not None else 'log'
+            })
         self.logger.info(msg, *args, **kwargs)
 
     def warning(self, msg, *args, **kwargs):
