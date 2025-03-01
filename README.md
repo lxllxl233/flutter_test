@@ -44,19 +44,19 @@ python ./case_server/case_server.py
 python main.py
 ```
 运行后即可查看到demo的运行结果
-![img.png](img/运行结果.png)
+![img.png](./img/运行结果.png)
 点击用例名称可以缩起列表
-![img.png](img/缩起用例运行结果.png)
+![img.png](./img/缩起用例运行结果.png)
 点击请求路径可以查看请求的详情，包括请求头、参数、响应
-![img.png](img/请求路径.png)
+![img.png](./img/请求路径.png)
 ## 常用功能
 ### 目录结构说明
 总目录结构
-![img.png](img/项目目录结构.png)
+![img.png](./img/项目目录结构.png)
 框架目录
-![img.png](img/框架目录.png)
+![img.png](./img/框架目录.png)
 项目目录
-![img.png](img/测试项目目录.png)
+![img.png](./img/测试项目目录.png)
 ### 用例编写
 一个用例的基本结构如下，需要注意的是 case_tags 里要包含用例 case_id 里的用例id
 
@@ -84,9 +84,9 @@ class TestFrame:
 ```
 ### 测试床添加
 可以在项目目录下面建测试床，json文件可以随需要填写
-![img.png](img/测试床.png)
+![img.png](./img/测试床.png)
 测试床添加后可以配置当前项目使用该测试床
-![img.png](img/测试床引用.png)
+![img.png](./img/测试床引用.png)
 可以在测试用例或者项目中使用下面的代码随时获取测试床配置的值，例如，获取刚刚配置的remote_ip的值
 ```python
 from frame.core.frame_config import ConfigManager
@@ -94,9 +94,9 @@ remote_ip = ConfigManager.get('remote_ip')
 ```
 ### 测试任务管理
 在项目目录下的task目录新建任务文件，这里的id对应case_tags里填写的用例id
-![img.png](img/task任务文件.png)
+![img.png](./img/task任务文件.png)
 配置当前项目运行该任务
-![img.png](img/run该任务.png)
+![img.png](./img/run该任务.png)
 配置完成后执行main.py即可运行指定任务
 ### 动态自定义配置
 在main.py同级下创建self_conf.json即可动态修改配置
@@ -115,16 +115,16 @@ user_conf 里面填测试床的键值对
 ### allure报告生成（暂用allure生成报告）
 生成报告需要你的机器安装allure,
 运行框架时会打印报告的位置
-![img.png](img/报告位置.png)
+![img.png](./img/报告位置.png)
 运行后可以到该位置查看报告，默认只生成allure文件，需要自己执行命令生成报告（考虑默认是调试的情况）
-![img.png](img/allure文件.png)
+![img.png](./img/allure文件.png)
 执行以下命令生成报告
 ```bash
 allure generate simple_project\report\2025_03_01_21_10_50 -o simple_project\report\2025_03_01_21_10_50\report --clean
 ```
 可以看到标签作者和执行信息
-![img.png](img/report.png)
+![img.png](./img/report.png)
 可以修改这个值在运行完成后自动生成报告
-![img.png](img/config报告生成.png)
+![img.png](./img/config报告生成.png)
 配置后再运行即可自动生成报告
-![img.png](img/自动生成报告.png)
+![img.png](./img/自动生成报告.png)
