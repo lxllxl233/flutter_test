@@ -2,6 +2,8 @@ import argparse
 import json
 import os
 import sys
+from datetime import datetime
+
 import pytest
 from typing import List, Optional
 
@@ -54,8 +56,13 @@ class FrameApplication:
 
             # 运行测试
             print(pytest_args)
-            self._run_tests(pytest_args)
-
+            exit_code = self._run_tests(pytest_args)
+            print('用例执行完成，退出码 ：', exit_code)
+            # 判断是否生成allure报告
+            print(self.config_manager.get('AUTO_CREATE_ALLURE_REPORT'))
+            if self.config_manager.get('AUTO_CREATE_ALLURE_REPORT'):
+                print('开始生成测试报告')
+                os.system(f'allure generate {self.allure_dir} -o {self.allure_report_dir} --clean')
         except Exception as e:
             print(f"❌ 框架启动失败: {str(e)}")
             sys.exit(1)
@@ -93,10 +100,16 @@ class FrameApplication:
         """
         args = self._parse_args()
         print(args)
+        current_time = datetime.now().strftime("%Y_%m_%d_%H_%M_%S")
+        self.allure_dir = os.path.join(self.config_manager.get('REPORT_DIR'), current_time)
+        self.allure_report_dir = os.path.join(self.allure_dir, 'report')
+        print('当前allure输出位置 : ', self.allure_dir)
+        os.makedirs(self.allure_dir, exist_ok=True)
+        os.makedirs(self.allure_report_dir, exist_ok=True)
         pytest_args = [
             "-s",  # 详细输出
             "--capture=no",  # 禁用输出捕获
-            "--alluredir=" + self.config_manager.get('REPORT_DIR'),
+            "--alluredir=" + self.allure_dir,
             "-m=" + ' or '.join(test_ids),
             "-W ignore::pytest.PytestUnknownMarkWarning",
             "-W ignore::pytest.PytestConfigWarning"
@@ -119,7 +132,7 @@ class FrameApplication:
         else:
             print(f"❌ 测试失败，退出码: {exit_code}")
 
-        sys.exit(exit_code)
+        return exit_code
 
     def _parse_args(self) -> argparse.Namespace:
         """

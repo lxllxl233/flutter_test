@@ -1,8 +1,6 @@
 import time
-
-import pytest
-
 from frame.core.frame_bean import FrameBean
+from frame.core.frame_config import ConfigManager
 from frame.core.frame_visualization import frame
 from frame.utils.common_utils import frame_case, AssertUtil
 from frame.utils.http_utils import HttpClient
@@ -31,6 +29,8 @@ class TestFrame:
                 'id' : 'OBFB.1E928B2B86E3D4E8ED1D46B83E667303',
                 'pid' : 'Fb','qlt' :99,'r' :0
             })
+            remote_ip = ConfigManager.get('remote_ip')
+            logger.info(remote_ip)
             logger.info('1test1111111111111111111111')
             time.sleep(TestFrame.wait_time)
             logger.info('1test1111111111111111111111')

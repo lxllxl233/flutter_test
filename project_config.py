@@ -12,6 +12,7 @@ CONFIG_DICT = {
     'IS_VIEW': True,
     'REMOTE_URL': 'http://localhost:8080'
 }
+CONFIG_DICT['AUTO_CREATE_ALLURE_REPORT'] = False
 CONFIG_DICT['LOG_DIR'] = os.path.join(CONFIG_DICT['PROJECT_NAME'], 'case_log')
 CONFIG_DICT['REPORT_DIR'] = os.path.join(CONFIG_DICT['PROJECT_NAME'], 'report')
 # 用户自定义配置

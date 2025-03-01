@@ -6,4 +6,4 @@ def send(message):
     response = requests.post(url, json={
         "message": message
     })
-    print(response.status_code)
+    # print(response.status_code)
