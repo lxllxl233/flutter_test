@@ -1,4 +1,5 @@
 # flutter_test
+README 图片解析异常可以查看 ： https://gitee.com/lxl-plus/flutter_test
 ## 框架简介
 框架目标用户是测开和TSE
 
