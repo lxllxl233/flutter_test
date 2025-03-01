@@ -46,8 +46,9 @@ class FrameApplication:
             task = self.config_manager.get('TASK', None)
             case_ids = []
             if task is not None:
-                task = os.path.join(os.path.join(self.config_manager.get('PROJECT_NAME'), 'task'), task+'.json')
-                case_ids = json.load(open(task))['case_ids']
+                task_file_path = os.path.join(os.path.join(self.config_manager.get('PROJECT_NAME'), 'task'), task+'.json')
+                print('任务文件路径 : ', task_file_path)
+                case_ids = json.load(open(task_file_path))['case_ids']
                 print(case_ids)
             pytest_args = self._build_pytest_args(case_ids)
 
